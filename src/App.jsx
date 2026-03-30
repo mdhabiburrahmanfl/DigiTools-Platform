@@ -1,11 +1,19 @@
+import { useState } from 'react';
 import { FiShoppingCart } from 'react-icons/fi';
 import { HiMiniSparkles } from 'react-icons/hi2';
 import bannerImage from '../assets/banner.png';
 import playIcon from '../assets/Play.png';
 
 const navItems = ['Home', 'Products', 'Pricing', 'Support'];
+const stats = [
+  { value: '50K+', label: 'Active Customers' },
+  { value: '200+', label: 'Premium Assets' },
+  { value: '4.9', label: 'Average Rating' },
+];
 
 function App() {
+  const [activeView, setActiveView] = useState('products');
+
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top,#f8f5ff,#ffffff_45%)] text-slate-900">
       <header className="mx-auto max-w-7xl px-5 pt-6 md:px-8 lg:px-10">
@@ -102,6 +110,71 @@ function App() {
                 className="h-full w-full rounded-[1.5rem] object-cover"
               />
             </div>
+          </div>
+        </section>
+
+        <section className="bg-[linear-gradient(90deg,#6d28d9,#9333ea)]">
+          <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-5 py-10 text-center text-white md:grid-cols-3 md:px-8 lg:px-10">
+            {stats.map((stat) => (
+              <div key={stat.label}>
+                <p className="font-outfit text-4xl font-extrabold">{stat.value}</p>
+                <p className="mt-2 text-sm font-medium text-white/80">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section id="products" className="mx-auto max-w-7xl px-5 py-18 md:px-8 lg:px-10">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-violet-600">Premium collection</p>
+            <h2 className="mt-4 font-outfit text-4xl font-extrabold text-slate-950 md:text-5xl">Premium Digital Tools</h2>
+            <p className="mt-4 text-base leading-8 text-slate-600">
+              Choose from curated digital products designed to make your workflow faster, cleaner, and more effective.
+            </p>
+          </div>
+
+          <div className="mt-8 flex justify-center">
+            <div className="rounded-full border border-slate-200 bg-white p-2 shadow-sm">
+              <button
+                type="button"
+                className={`rounded-full px-6 py-3 text-sm font-semibold transition ${
+                  activeView === 'products' ? 'bg-violet-600 text-white shadow-lg' : 'text-slate-600'
+                }`}
+                onClick={() => setActiveView('products')}
+              >
+                Products
+              </button>
+              <button
+                type="button"
+                className={`rounded-full px-6 py-3 text-sm font-semibold transition ${
+                  activeView === 'cart' ? 'bg-violet-600 text-white shadow-lg' : 'text-slate-600'
+                }`}
+                onClick={() => setActiveView('cart')}
+              >
+                Cart (0)
+              </button>
+            </div>
+          </div>
+
+          <div className="mt-12 rounded-[2rem] border border-slate-200 bg-white p-8 text-center shadow-[0_18px_60px_rgba(15,23,42,0.06)]">
+            {activeView === 'products' ? (
+              <>
+                <p className="text-sm font-semibold uppercase tracking-[0.25em] text-violet-600">Products Preview</p>
+                <h3 className="mt-3 font-outfit text-3xl font-bold text-slate-950">Product cards will appear here next</h3>
+                <p className="mx-auto mt-4 max-w-2xl text-base leading-8 text-slate-600">
+                  Part 4 will add the full product JSON data and the three-column product card layout in this section.
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="text-sm font-semibold uppercase tracking-[0.25em] text-violet-600">Cart Preview</p>
+                <h3 className="mt-3 font-outfit text-3xl font-bold text-slate-950">Your cart is empty</h3>
+                <p className="mx-auto mt-4 max-w-2xl text-base leading-8 text-slate-600">
+                  The cart layout and checkout interactions will be added in later parts. For now, this toggle already
+                  switches between Products and Cart views.
+                </p>
+              </>
+            )}
           </div>
         </section>
       </main>
