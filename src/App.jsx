@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { FiShoppingCart } from 'react-icons/fi';
+import { useMemo, useState } from 'react';
+import { FiShoppingCart, FiTrash2 } from 'react-icons/fi';
 import { HiMiniSparkles } from 'react-icons/hi2';
 import bannerImage from '../assets/banner.png';
 import playIcon from '../assets/Play.png';
@@ -21,8 +21,22 @@ function App() {
   const [activeView, setActiveView] = useState('products');
   const [cartItems, setCartItems] = useState([]);
 
+  const totalPrice = useMemo(
+    () => cartItems.reduce((total, item) => total + item.price, 0),
+    [cartItems]
+  );
+
   const addToCart = (product) => {
     setCartItems((currentItems) => [...currentItems, product]);
+  };
+
+  const removeFromCart = (cartIndex) => {
+    setCartItems((currentItems) => currentItems.filter((_, index) => index !== cartIndex));
+  };
+
+  const handleCheckout = () => {
+    setCartItems([]);
+    setActiveView('cart');
   };
 
   return (
@@ -227,16 +241,61 @@ function App() {
                 })}
               </div>
             ) : (
-              <div className="rounded-[2rem] border border-slate-200 bg-white p-8 text-center shadow-[0_18px_60px_rgba(15,23,42,0.06)]">
-                <p className="text-sm font-semibold uppercase tracking-[0.25em] text-violet-600">Cart Preview</p>
-                <h3 className="mt-3 font-outfit text-3xl font-bold text-slate-950">
-                  {cartItems.length ? `You have ${cartItems.length} item${cartItems.length > 1 ? 's' : ''} in your cart` : 'Your cart is empty'}
-                </h3>
-                <p className="mx-auto mt-4 max-w-2xl text-base leading-8 text-slate-600">
-                  {cartItems.length
-                    ? 'The full cart layout will be added next. For now, your selected product count is already tracked in the navbar and cart tab.'
-                    : 'The cart layout and checkout interactions will be added in later parts. For now, this toggle already switches between Products and Cart views.'}
-                </p>
+              <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_18px_60px_rgba(15,23,42,0.06)] md:p-8">
+                <h3 className="font-outfit text-3xl font-bold text-slate-950">Your Cart</h3>
+
+                {cartItems.length ? (
+                  <>
+                    <div className="mt-8 space-y-4">
+                      {cartItems.map((item, index) => (
+                        <div
+                          key={`${item.id}-${index}`}
+                          className="flex flex-col gap-4 rounded-[1.5rem] bg-slate-50 px-5 py-4 sm:flex-row sm:items-center sm:justify-between"
+                        >
+                          <div className="flex items-center gap-4">
+                            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white shadow-sm">
+                              <img src={item.icon} alt="" className="h-8 w-8 object-contain" />
+                            </div>
+                            <div>
+                              <p className="font-outfit text-xl font-semibold text-slate-900">{item.name}</p>
+                              <p className="text-sm text-slate-500">${item.price}</p>
+                            </div>
+                          </div>
+
+                          <button
+                            type="button"
+                            className="inline-flex items-center gap-2 self-start text-sm font-semibold text-rose-500 transition hover:text-rose-600 sm:self-center"
+                            onClick={() => removeFromCart(index)}
+                          >
+                            <FiTrash2 />
+                            Remove
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="mt-8 flex items-center justify-between text-lg font-medium text-slate-600">
+                      <p>Total:</p>
+                      <p className="font-outfit text-3xl font-extrabold text-slate-950">${totalPrice}</p>
+                    </div>
+
+                    <button
+                      type="button"
+                      className="btn mt-8 h-14 w-full rounded-full border-none bg-[linear-gradient(90deg,#6d28d9,#c026d3)] text-white shadow-[0_16px_40px_rgba(124,58,237,0.35)] hover:opacity-95"
+                      onClick={handleCheckout}
+                    >
+                      Proceed To Checkout
+                    </button>
+                  </>
+                ) : (
+                  <div className="mt-8 rounded-[1.5rem] border border-dashed border-slate-300 bg-slate-50 px-6 py-16 text-center">
+                    <FiShoppingCart className="mx-auto text-4xl text-violet-500" />
+                    <p className="mt-4 font-outfit text-2xl font-bold text-slate-900">Your cart is empty</p>
+                    <p className="mt-2 text-slate-600">
+                      Browse the premium tools collection and add the products you want to purchase.
+                    </p>
+                  </div>
+                )}
               </div>
             )}
           </div>
