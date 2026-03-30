@@ -1,0 +1,31 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+@theme {
+  --font-outfit: "Outfit", sans-serif;
+  --font-plus-jakarta: "Plus Jakarta Sans", sans-serif;
+  --color-brand-primary: #7c3aed;
+  --color-brand-secondary: #c026d3;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-plus-jakarta);
+  background: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+}
