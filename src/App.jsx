@@ -3,6 +3,7 @@ import { FiShoppingCart } from 'react-icons/fi';
 import { HiMiniSparkles } from 'react-icons/hi2';
 import bannerImage from '../assets/banner.png';
 import playIcon from '../assets/Play.png';
+import { products } from './data/products';
 
 const navItems = ['Home', 'Products', 'Pricing', 'Support'];
 const stats = [
@@ -10,6 +11,11 @@ const stats = [
   { value: '200+', label: 'Premium Assets' },
   { value: '4.9', label: 'Average Rating' },
 ];
+const tagClasses = {
+  popular: 'bg-violet-100 text-violet-700',
+  new: 'bg-emerald-100 text-emerald-700',
+  'best seller': 'bg-amber-100 text-amber-700',
+};
 
 function App() {
   const [activeView, setActiveView] = useState('products');
@@ -156,24 +162,61 @@ function App() {
             </div>
           </div>
 
-          <div className="mt-12 rounded-[2rem] border border-slate-200 bg-white p-8 text-center shadow-[0_18px_60px_rgba(15,23,42,0.06)]">
+          <div className="mt-12">
             {activeView === 'products' ? (
-              <>
-                <p className="text-sm font-semibold uppercase tracking-[0.25em] text-violet-600">Products Preview</p>
-                <h3 className="mt-3 font-outfit text-3xl font-bold text-slate-950">Product cards will appear here next</h3>
-                <p className="mx-auto mt-4 max-w-2xl text-base leading-8 text-slate-600">
-                  Part 4 will add the full product JSON data and the three-column product card layout in this section.
-                </p>
-              </>
+              <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+                {products.map((product) => (
+                  <article
+                    key={product.id}
+                    className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_18px_60px_rgba(15,23,42,0.06)] transition hover:-translate-y-1 hover:shadow-[0_26px_70px_rgba(15,23,42,0.1)]"
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-violet-50">
+                        <img src={product.icon} alt="" className="h-8 w-8 object-contain" />
+                      </div>
+                      <span className={`rounded-full px-3 py-1 text-xs font-bold uppercase ${tagClasses[product.tagType]}`}>
+                        {product.tag}
+                      </span>
+                    </div>
+
+                    <h3 className="mt-6 font-outfit text-2xl font-bold text-slate-900">{product.name}</h3>
+                    <p className="mt-3 min-h-20 text-sm leading-7 text-slate-600">{product.description}</p>
+
+                    <div className="mt-5 flex items-end gap-2">
+                      <span className="font-outfit text-4xl font-extrabold text-slate-950">${product.price}</span>
+                      <span className="pb-1 text-sm text-slate-500">/{product.period}</span>
+                    </div>
+
+                    <p className="mt-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
+                      Tag Type: {product.tagType}
+                    </p>
+
+                    <ul className="mt-6 space-y-3 text-sm text-slate-600">
+                      {product.features.map((feature) => (
+                        <li key={feature} className="rounded-xl bg-slate-50 px-3 py-2">
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+
+                    <button
+                      type="button"
+                      className="btn mt-8 h-12 w-full rounded-full border-none bg-violet-600 text-white shadow-[0_12px_30px_rgba(124,58,237,0.3)] hover:bg-violet-700"
+                    >
+                      Buy Now
+                    </button>
+                  </article>
+                ))}
+              </div>
             ) : (
-              <>
+              <div className="rounded-[2rem] border border-slate-200 bg-white p-8 text-center shadow-[0_18px_60px_rgba(15,23,42,0.06)]">
                 <p className="text-sm font-semibold uppercase tracking-[0.25em] text-violet-600">Cart Preview</p>
                 <h3 className="mt-3 font-outfit text-3xl font-bold text-slate-950">Your cart is empty</h3>
                 <p className="mx-auto mt-4 max-w-2xl text-base leading-8 text-slate-600">
                   The cart layout and checkout interactions will be added in later parts. For now, this toggle already
                   switches between Products and Cart views.
                 </p>
-              </>
+              </div>
             )}
           </div>
         </section>
