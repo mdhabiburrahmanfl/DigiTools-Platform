@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import { FiCheckCircle, FiShoppingCart, FiTrash2 } from 'react-icons/fi';
 import { HiMiniSparkles } from 'react-icons/hi2';
+import { FaFacebookF, FaInstagram, FaXTwitter } from 'react-icons/fa6';
 import bannerImage from '../assets/banner.png';
 import playIcon from '../assets/Play.png';
 import userIcon from '../assets/user.png';
@@ -44,24 +45,42 @@ const steps = [
 const pricingPlans = [
   {
     name: 'Starter',
-    price: '$9',
-    description: 'A practical entry plan for students and solo creators building a reliable tool stack.',
-    features: ['Access to selected tools', 'Monthly updates', 'Standard email support'],
+    price: '$0',
+    description: 'Perfect for getting started',
+    features: ['Access to 10 free tools', 'Basic templates', 'Community support', '1 project per month'],
     featured: false,
+    buttonText: 'Get Started Free',
   },
   {
-    name: 'Professional',
-    price: '$25',
-    description: 'Best for freelancers and small teams who need premium assets and consistent workflow speed.',
-    features: ['Access to core premium tools', 'Priority product updates', 'Weekly fresh resources'],
+    name: 'Pro',
+    price: '$29',
+    description: 'Best for professionals',
+    features: [
+      'Access to all premium tools',
+      'Unlimited templates',
+      'Priority support',
+      'Unlimited projects',
+      'Cloud sync',
+      'Advanced analytics',
+    ],
     featured: true,
+    badge: 'Most Popular',
+    buttonText: 'Start Pro Trial',
   },
   {
     name: 'Enterprise',
     price: '$99',
-    description: 'Designed for agencies managing multiple brands, clients, and collaborative production systems.',
-    features: ['Unlimited team usage', 'Dedicated support access', 'Advanced workflow bundles'],
+    description: 'For teams and businesses',
+    features: [
+      'Everything in Pro',
+      'Team collaboration',
+      'Custom integrations',
+      'Dedicated support',
+      'SLA guarantee',
+      'Custom branding',
+    ],
     featured: false,
+    buttonText: 'Contact Sales',
   },
 ];
 
@@ -70,6 +89,48 @@ const tagClasses = {
   new: 'bg-emerald-100 text-emerald-700',
   'best seller': 'bg-amber-100 text-amber-700',
 };
+
+const footerSections = [
+  {
+    title: 'Product',
+    links: [
+      { label: 'Features', href: '#steps' },
+      { label: 'Pricing', href: '#pricing' },
+      { label: 'Templates', href: '#products' },
+      { label: 'Integrations', href: '#support' },
+    ],
+  },
+  {
+    title: 'Company',
+    links: [
+      { label: 'About', href: '#home' },
+      { label: 'Blog', href: '#support' },
+      { label: 'Careers', href: '#support' },
+      { label: 'Press', href: '#support' },
+    ],
+  },
+  {
+    title: 'Resources',
+    links: [
+      { label: 'Documentation', href: '#steps' },
+      { label: 'Help Center', href: '#support' },
+      { label: 'Community', href: '#support' },
+      { label: 'Contact', href: '#support' },
+    ],
+  },
+];
+
+const footerSocialLinks = [
+  { label: 'Instagram', href: 'https://instagram.com', icon: FaInstagram, external: true },
+  { label: 'Facebook', href: 'https://facebook.com', icon: FaFacebookF, external: true },
+  { label: 'X', href: 'https://x.com', icon: FaXTwitter, external: true },
+];
+
+const footerLegalLinks = [
+  { label: 'Privacy Policy', href: '#support' },
+  { label: 'Terms of Service', href: '#support' },
+  { label: 'Cookies', href: '#support' },
+];
 
 function App() {
   const [activeView, setActiveView] = useState('products');
@@ -421,22 +482,33 @@ function App() {
           <div className="text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-violet-600">Flexible plans</p>
             <h2 className="mt-4 font-outfit text-4xl font-extrabold text-slate-950 md:text-5xl">Simple, Transparent Pricing</h2>
+            <p className="mt-4 text-base leading-8 text-slate-600">
+              Choose the plan that fits your needs. Upgrade or downgrade anytime.
+            </p>
           </div>
 
           <div className="mt-12 grid gap-6 lg:grid-cols-3">
             {pricingPlans.map((plan) => (
               <article
                 key={plan.name}
-                className={`rounded-[2rem] border p-8 shadow-[0_18px_60px_rgba(15,23,42,0.06)] ${
+                className={`relative rounded-[2rem] border p-8 shadow-[0_18px_60px_rgba(15,23,42,0.06)] ${
                   plan.featured
                     ? 'border-violet-200 bg-[linear-gradient(180deg,#7c3aed,#5b21b6)] text-white'
                     : 'border-slate-200 bg-white text-slate-900'
                 }`}
               >
+                {plan.badge ? (
+                  <span className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-100 px-4 py-2 text-sm font-semibold text-amber-600 shadow-sm">
+                    {plan.badge}
+                  </span>
+                ) : null}
                 <p className={`text-sm font-semibold uppercase tracking-[0.2em] ${plan.featured ? 'text-violet-100' : 'text-violet-600'}`}>
                   {plan.name}
                 </p>
-                <p className="mt-4 font-outfit text-5xl font-extrabold">{plan.price}</p>
+                <div className="mt-4 flex items-end gap-1">
+                  <p className="font-outfit text-5xl font-extrabold">{plan.price}</p>
+                  <span className={`pb-1 text-sm ${plan.featured ? 'text-white/80' : 'text-slate-500'}`}>/Month</span>
+                </div>
                 <p className={`mt-4 text-sm leading-7 ${plan.featured ? 'text-white/80' : 'text-slate-600'}`}>{plan.description}</p>
                 <ul className={`mt-6 space-y-3 text-sm ${plan.featured ? 'text-white/90' : 'text-slate-600'}`}>
                   {plan.features.map((feature) => (
@@ -454,7 +526,7 @@ function App() {
                       : 'bg-violet-600 text-white shadow-[0_12px_30px_rgba(124,58,237,0.3)] hover:bg-violet-700'
                   }`}
                 >
-                  Choose Plan
+                  {plan.buttonText}
                 </button>
               </article>
             ))}
@@ -486,47 +558,66 @@ function App() {
         </section>
       </main>
 
-      <footer id="support" className="bg-slate-950 text-white">
-        <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 md:px-8 lg:grid-cols-[1.3fr_1fr_1fr_1fr] lg:px-10">
-          <div>
-            <a href="#home" className="font-outfit text-2xl font-extrabold">
-              Digi<span className="text-violet-400">Tools</span>
-            </a>
-            <p className="mt-4 max-w-sm text-sm leading-7 text-slate-400">
-              Premium digital resources for creators, marketers, and online businesses who want faster execution and better results.
-            </p>
+      <footer id="support" className="bg-[#121a2b] text-white">
+        <div className="mx-auto max-w-7xl px-5 py-20 md:px-8 lg:px-10">
+          <div className="grid gap-12 border-b border-white/10 pb-14 lg:grid-cols-[1.9fr_0.9fr_0.9fr_1fr_0.9fr]">
+            <div className="max-w-md">
+              <a href="#home" className="font-outfit text-5xl font-extrabold leading-none text-white">
+                DigiTools
+              </a>
+              <p className="mt-6 text-[1.08rem] leading-9 text-slate-300">
+                Premium digital tools for creators, professionals, and businesses. Work smarter with our suite of powerful tools.
+              </p>
+            </div>
+
+            {footerSections.map((section) => (
+              <div key={section.title}>
+                <h3 className="font-outfit text-[1.75rem] font-semibold text-white">{section.title}</h3>
+                <ul className="mt-6 space-y-5 text-[1.08rem] text-slate-300">
+                  {section.links.map((link) => (
+                    <li key={link.label}>
+                      <a href={link.href} className="transition hover:text-white">
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+
+            <div>
+              <h3 className="font-outfit text-[1.75rem] font-semibold text-white">Social Links</h3>
+              <div className="mt-6 flex items-center gap-4">
+                {footerSocialLinks.map((link) => {
+                  const Icon = link.icon;
+
+                  return (
+                    <a
+                      key={link.label}
+                      href={link.href}
+                      target={link.external ? '_blank' : undefined}
+                      rel={link.external ? 'noreferrer' : undefined}
+                      aria-label={link.label}
+                      className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-[#121a2b] transition hover:-translate-y-0.5 hover:bg-violet-100"
+                    >
+                      <Icon className="text-lg" />
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
           </div>
 
-          <div>
-            <h3 className="font-outfit text-lg font-bold">Company</h3>
-            <ul className="mt-4 space-y-3 text-sm text-slate-400">
-              <li><a href="#home" className="hover:text-white">Home</a></li>
-              <li><a href="#products" className="hover:text-white">Products</a></li>
-              <li><a href="#steps" className="hover:text-white">How It Works</a></li>
-            </ul>
+          <div className="flex flex-col gap-5 pt-8 text-sm text-slate-400 md:flex-row md:items-center md:justify-between">
+            <p>&copy; {currentYear} Digitools. All rights reserved.</p>
+            <div className="flex flex-wrap items-center gap-6 md:gap-10">
+              {footerLegalLinks.map((link) => (
+                <a key={link.label} href={link.href} className="transition hover:text-white">
+                  {link.label}
+                </a>
+              ))}
+            </div>
           </div>
-
-          <div>
-            <h3 className="font-outfit text-lg font-bold">Resources</h3>
-            <ul className="mt-4 space-y-3 text-sm text-slate-400">
-              <li><a href="#pricing" className="hover:text-white">Pricing</a></li>
-              <li><a href="#support" className="hover:text-white">Support</a></li>
-              <li><a href="#products" className="hover:text-white">Best Sellers</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="font-outfit text-lg font-bold">Contact</h3>
-            <ul className="mt-4 space-y-3 text-sm text-slate-400">
-              <li>hello@digitools.dev</li>
-              <li>+880 1712-345678</li>
-              <li>Available every day, 9 AM to 10 PM</li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="border-t border-white/10 px-5 py-5 text-center text-sm text-slate-500 md:px-8 lg:px-10">
-          Copyright 2026 DigiTools. All rights reserved.
         </div>
       </footer>
     </div>
@@ -534,4 +625,5 @@ function App() {
 }
 
 export default App;
+
 
