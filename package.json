@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "A responsive digital tools buying website built with React, Tailwind CSS, DaisyUI, and React-Toastify.",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview --host"
   },
   "repository": {
     "type": "git",

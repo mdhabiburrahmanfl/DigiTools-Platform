@@ -10,10 +10,11 @@ import rocketIcon from '../assets/rocket.png';
 import { products } from './data/products';
 
 const navItems = [
-  { label: 'Home', href: '#home' },
   { label: 'Products', href: '#products' },
+  { label: 'Features', href: '#steps' },
   { label: 'Pricing', href: '#pricing' },
-  { label: 'Support', href: '#support' },
+  { label: 'Testimonials', href: '#support' },
+  { label: 'FAQ', href: '#support' },
 ];
 
 const stats = [
@@ -117,55 +118,68 @@ function App() {
         pauseOnHover={false}
       />
 
-      <header className="mx-auto max-w-7xl px-5 pt-6 md:px-8 lg:px-10">
-        <nav className="flex flex-col gap-4 rounded-full border border-white/80 bg-white/90 px-5 py-4 shadow-[0_18px_60px_rgba(15,23,42,0.08)] backdrop-blur lg:flex-row lg:items-center lg:justify-between">
-          <div className="flex items-center justify-between">
-            <a href="#home" className="font-outfit text-2xl font-extrabold text-slate-900">
-              Digi<span className="text-violet-600">Tools</span>
-            </a>
-
-            <button
-              type="button"
-              className="btn btn-circle border-none bg-slate-100 text-slate-700 shadow-none hover:bg-slate-200 lg:hidden"
-              onClick={() => setActiveView('cart')}
-            >
-              <div className="indicator">
-                <FiShoppingCart className="text-lg" />
-                <span className="badge indicator-item badge-secondary border-none bg-violet-600 text-white">
-                  {cartItems.length}
-                </span>
-              </div>
-            </button>
-          </div>
-
-          <div className="flex flex-wrap items-center justify-center gap-5 text-sm font-medium text-slate-500">
-            {navItems.map((item) => (
-              <a key={item.label} href={item.href} className="transition hover:text-violet-600">
-                {item.label}
+      <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur-xl">
+        <nav className="mx-auto max-w-7xl px-5 py-5 md:px-8 lg:px-10">
+          <div className="flex flex-wrap items-center justify-between gap-4 lg:grid lg:grid-cols-[auto_1fr_auto] lg:gap-10">
+            <div className="flex items-center justify-between gap-4">
+              <a href="#home" className="font-outfit text-4xl font-extrabold leading-none text-violet-600 md:text-5xl">
+                DigiTools
               </a>
-            ))}
-          </div>
 
-          <div className="hidden items-center gap-3 lg:flex">
-            <button
-              type="button"
-              className="btn btn-circle border-none bg-slate-100 text-slate-700 shadow-none hover:bg-slate-200"
-              onClick={() => setActiveView('cart')}
-            >
-              <div className="indicator">
-                <FiShoppingCart className="text-lg" />
-                <span className="badge indicator-item badge-secondary border-none bg-violet-600 text-white">
-                  {cartItems.length}
-                </span>
-              </div>
-            </button>
-            <a
-              href="#products"
-              className="btn rounded-full border-none bg-violet-600 px-6 text-white shadow-[0_12px_30px_rgba(124,58,237,0.35)] hover:bg-violet-700"
-              onClick={() => setActiveView('products')}
-            >
-              Buy Now
-            </a>
+              <button
+                type="button"
+                className="btn btn-circle btn-ghost text-slate-700 lg:hidden"
+                onClick={() => setActiveView('cart')}
+                aria-label="Open cart"
+              >
+                <div className="indicator">
+                  <FiShoppingCart className="text-xl" />
+                  {cartItems.length > 0 ? (
+                    <span className="badge indicator-item badge-secondary border-none bg-violet-600 text-white">
+                      {cartItems.length}
+                    </span>
+                  ) : null}
+                </div>
+              </button>
+            </div>
+
+            <div className="order-3 flex w-full flex-wrap items-center justify-center gap-6 text-xl font-medium text-slate-800 lg:order-2 lg:w-auto lg:text-[1.12rem]">
+              {navItems.map((item) => (
+                <a key={item.label} href={item.href} className="transition hover:text-violet-600">
+                  {item.label}
+                </a>
+              ))}
+            </div>
+
+            <div className="order-2 hidden items-center gap-5 lg:flex">
+              <button
+                type="button"
+                className="btn btn-circle btn-ghost text-slate-700 hover:bg-transparent hover:text-violet-600"
+                onClick={() => setActiveView('cart')}
+                aria-label="Open cart"
+              >
+                <div className="indicator">
+                  <FiShoppingCart className="text-xl" />
+                  {cartItems.length > 0 ? (
+                    <span className="badge indicator-item badge-secondary border-none bg-violet-600 text-white">
+                      {cartItems.length}
+                    </span>
+                  ) : null}
+                </div>
+              </button>
+
+              <a href="#support" className="text-xl font-medium text-slate-800 transition hover:text-violet-600">
+                Login
+              </a>
+
+              <a
+                href="#products"
+                className="btn rounded-full border-none bg-violet-600 px-7 text-lg font-semibold text-white shadow-none hover:bg-violet-700"
+                onClick={() => setActiveView('products')}
+              >
+                Get Started
+              </a>
+            </div>
           </div>
         </nav>
       </header>
@@ -520,3 +534,4 @@ function App() {
 }
 
 export default App;
+
