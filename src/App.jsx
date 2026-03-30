@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
 import { FiShoppingCart, FiTrash2 } from 'react-icons/fi';
 import { HiMiniSparkles } from 'react-icons/hi2';
 import bannerImage from '../assets/banner.png';
@@ -28,19 +29,42 @@ function App() {
 
   const addToCart = (product) => {
     setCartItems((currentItems) => [...currentItems, product]);
+    toast.success(`${product.name} added to cart`);
   };
 
   const removeFromCart = (cartIndex) => {
-    setCartItems((currentItems) => currentItems.filter((_, index) => index !== cartIndex));
+    setCartItems((currentItems) => {
+      const removedItem = currentItems[cartIndex];
+      if (!removedItem) {
+        return currentItems;
+      }
+
+      toast.info(`${removedItem.name} removed from cart`);
+      return currentItems.filter((_, index) => index !== cartIndex);
+    });
   };
 
   const handleCheckout = () => {
+    if (!cartItems.length) {
+      toast.error('Your cart is already empty');
+      return;
+    }
+
     setCartItems([]);
     setActiveView('cart');
+    toast.success('Proceed to checkout complete. Cart cleared successfully.');
   };
 
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top,#f8f5ff,#ffffff_45%)] text-slate-900">
+      <ToastContainer
+        position="top-right"
+        autoClose={2200}
+        newestOnTop
+        hideProgressBar={false}
+        pauseOnHover={false}
+      />
+
       <header className="mx-auto max-w-7xl px-5 pt-6 md:px-8 lg:px-10">
         <nav className="flex flex-col gap-4 rounded-full border border-white/80 bg-white/90 px-5 py-4 shadow-[0_18px_60px_rgba(15,23,42,0.08)] backdrop-blur lg:flex-row lg:items-center lg:justify-between">
           <div className="flex items-center justify-between">
