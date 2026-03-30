@@ -19,6 +19,11 @@ const tagClasses = {
 
 function App() {
   const [activeView, setActiveView] = useState('products');
+  const [cartItems, setCartItems] = useState([]);
+
+  const addToCart = (product) => {
+    setCartItems((currentItems) => [...currentItems, product]);
+  };
 
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top,#f8f5ff,#ffffff_45%)] text-slate-900">
@@ -32,10 +37,13 @@ function App() {
             <button
               type="button"
               className="btn btn-circle border-none bg-slate-100 text-slate-700 shadow-none hover:bg-slate-200 lg:hidden"
+              onClick={() => setActiveView('cart')}
             >
               <div className="indicator">
                 <FiShoppingCart className="text-lg" />
-                <span className="badge indicator-item badge-secondary border-none bg-violet-600 text-white">0</span>
+                <span className="badge indicator-item badge-secondary border-none bg-violet-600 text-white">
+                  {cartItems.length}
+                </span>
               </div>
             </button>
           </div>
@@ -52,15 +60,19 @@ function App() {
             <button
               type="button"
               className="btn btn-circle border-none bg-slate-100 text-slate-700 shadow-none hover:bg-slate-200"
+              onClick={() => setActiveView('cart')}
             >
               <div className="indicator">
                 <FiShoppingCart className="text-lg" />
-                <span className="badge indicator-item badge-secondary border-none bg-violet-600 text-white">0</span>
+                <span className="badge indicator-item badge-secondary border-none bg-violet-600 text-white">
+                  {cartItems.length}
+                </span>
               </div>
             </button>
             <button
               type="button"
               className="btn rounded-full border-none bg-violet-600 px-6 text-white shadow-[0_12px_30px_rgba(124,58,237,0.35)] hover:bg-violet-700"
+              onClick={() => setActiveView('products')}
             >
               Buy Now
             </button>
@@ -92,6 +104,7 @@ function App() {
               <button
                 type="button"
                 className="btn h-13 rounded-full border-none bg-violet-600 px-8 text-white shadow-[0_14px_40px_rgba(124,58,237,0.35)] hover:bg-violet-700"
+                onClick={() => setActiveView('products')}
               >
                 Shop Tools
               </button>
@@ -157,7 +170,7 @@ function App() {
                 }`}
                 onClick={() => setActiveView('cart')}
               >
-                Cart (0)
+                Cart ({cartItems.length})
               </button>
             </div>
           </div>
@@ -165,56 +178,64 @@ function App() {
           <div className="mt-12">
             {activeView === 'products' ? (
               <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-                {products.map((product) => (
-                  <article
-                    key={product.id}
-                    className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_18px_60px_rgba(15,23,42,0.06)] transition hover:-translate-y-1 hover:shadow-[0_26px_70px_rgba(15,23,42,0.1)]"
-                  >
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-violet-50">
-                        <img src={product.icon} alt="" className="h-8 w-8 object-contain" />
-                      </div>
-                      <span className={`rounded-full px-3 py-1 text-xs font-bold uppercase ${tagClasses[product.tagType]}`}>
-                        {product.tag}
-                      </span>
-                    </div>
+                {products.map((product) => {
+                  const isAdded = cartItems.some((item) => item.id === product.id);
 
-                    <h3 className="mt-6 font-outfit text-2xl font-bold text-slate-900">{product.name}</h3>
-                    <p className="mt-3 min-h-20 text-sm leading-7 text-slate-600">{product.description}</p>
-
-                    <div className="mt-5 flex items-end gap-2">
-                      <span className="font-outfit text-4xl font-extrabold text-slate-950">${product.price}</span>
-                      <span className="pb-1 text-sm text-slate-500">/{product.period}</span>
-                    </div>
-
-                    <p className="mt-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
-                      Tag Type: {product.tagType}
-                    </p>
-
-                    <ul className="mt-6 space-y-3 text-sm text-slate-600">
-                      {product.features.map((feature) => (
-                        <li key={feature} className="rounded-xl bg-slate-50 px-3 py-2">
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-
-                    <button
-                      type="button"
-                      className="btn mt-8 h-12 w-full rounded-full border-none bg-violet-600 text-white shadow-[0_12px_30px_rgba(124,58,237,0.3)] hover:bg-violet-700"
+                  return (
+                    <article
+                      key={product.id}
+                      className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_18px_60px_rgba(15,23,42,0.06)] transition hover:-translate-y-1 hover:shadow-[0_26px_70px_rgba(15,23,42,0.1)]"
                     >
-                      Buy Now
-                    </button>
-                  </article>
-                ))}
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-violet-50">
+                          <img src={product.icon} alt="" className="h-8 w-8 object-contain" />
+                        </div>
+                        <span className={`rounded-full px-3 py-1 text-xs font-bold uppercase ${tagClasses[product.tagType]}`}>
+                          {product.tag}
+                        </span>
+                      </div>
+
+                      <h3 className="mt-6 font-outfit text-2xl font-bold text-slate-900">{product.name}</h3>
+                      <p className="mt-3 min-h-20 text-sm leading-7 text-slate-600">{product.description}</p>
+
+                      <div className="mt-5 flex items-end gap-2">
+                        <span className="font-outfit text-4xl font-extrabold text-slate-950">${product.price}</span>
+                        <span className="pb-1 text-sm text-slate-500">/{product.period}</span>
+                      </div>
+
+                      <p className="mt-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
+                        Tag Type: {product.tagType}
+                      </p>
+
+                      <ul className="mt-6 space-y-3 text-sm text-slate-600">
+                        {product.features.map((feature) => (
+                          <li key={feature} className="rounded-xl bg-slate-50 px-3 py-2">
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+
+                      <button
+                        type="button"
+                        className="btn mt-8 h-12 w-full rounded-full border-none bg-violet-600 text-white shadow-[0_12px_30px_rgba(124,58,237,0.3)] hover:bg-violet-700"
+                        onClick={() => addToCart(product)}
+                      >
+                        {isAdded ? 'Added to Cart' : 'Buy Now'}
+                      </button>
+                    </article>
+                  );
+                })}
               </div>
             ) : (
               <div className="rounded-[2rem] border border-slate-200 bg-white p-8 text-center shadow-[0_18px_60px_rgba(15,23,42,0.06)]">
                 <p className="text-sm font-semibold uppercase tracking-[0.25em] text-violet-600">Cart Preview</p>
-                <h3 className="mt-3 font-outfit text-3xl font-bold text-slate-950">Your cart is empty</h3>
+                <h3 className="mt-3 font-outfit text-3xl font-bold text-slate-950">
+                  {cartItems.length ? `You have ${cartItems.length} item${cartItems.length > 1 ? 's' : ''} in your cart` : 'Your cart is empty'}
+                </h3>
                 <p className="mx-auto mt-4 max-w-2xl text-base leading-8 text-slate-600">
-                  The cart layout and checkout interactions will be added in later parts. For now, this toggle already
-                  switches between Products and Cart views.
+                  {cartItems.length
+                    ? 'The full cart layout will be added next. For now, your selected product count is already tracked in the navbar and cart tab.'
+                    : 'The cart layout and checkout interactions will be added in later parts. For now, this toggle already switches between Products and Cart views.'}
                 </p>
               </div>
             )}
