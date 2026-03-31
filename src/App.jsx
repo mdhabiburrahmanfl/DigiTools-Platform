@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+﻿import { useMemo, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import { FiCheckCircle, FiShoppingCart, FiTrash2 } from 'react-icons/fi';
 import { HiMiniSparkles } from 'react-icons/hi2';
@@ -195,7 +195,7 @@ function App() {
                 <div className="indicator">
                   <FiShoppingCart className="text-xl" />
                   {cartItems.length > 0 ? (
-                    <span className="badge indicator-item badge-secondary border-none bg-violet-600 text-white">
+                    <span className="badge indicator-item badge-secondary -right-0.5 -top-0.5 h-4 min-h-4 min-w-4 border-none bg-violet-600 px-1 text-[8px] font-bold leading-none text-white">
                       {cartItems.length}
                     </span>
                   ) : null}
@@ -221,7 +221,7 @@ function App() {
                 <div className="indicator">
                   <FiShoppingCart className="text-xl" />
                   {cartItems.length > 0 ? (
-                    <span className="badge indicator-item badge-secondary border-none bg-violet-600 text-white">
+                    <span className="badge indicator-item badge-secondary -right-0.5 -top-0.5 h-4 min-h-4 min-w-4 border-none bg-violet-600 px-1 text-[8px] font-bold leading-none text-white">
                       {cartItems.length}
                     </span>
                   ) : null}
@@ -348,11 +348,11 @@ function App() {
                   return (
                     <article
                       key={product.id}
-                      className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_18px_60px_rgba(15,23,42,0.06)] transition hover:-translate-y-1 hover:shadow-[0_26px_70px_rgba(15,23,42,0.1)]"
+                      className="group rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_18px_60px_rgba(15,23,42,0.06)] transition duration-300 hover:-translate-y-2 hover:border-violet-200 hover:shadow-[0_28px_80px_rgba(124,58,237,0.14)]"
                     >
                       <div className="flex items-start justify-between gap-4">
-                        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-violet-50">
-                          <img src={product.icon} alt="" className="h-8 w-8 object-contain" />
+                        <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-violet-50 transition duration-300 group-hover:scale-105 group-hover:bg-violet-100">
+                          <img src={product.icon} alt="" className={`object-contain drop-shadow-sm transition duration-300 group-hover:scale-105 ${product.id === 6 ? 'h-12 w-12' : 'h-9 w-9'}`} />
                         </div>
                         <span className={`rounded-full px-3 py-1 text-xs font-bold uppercase ${tagClasses[product.tagType]}`}>
                           {product.tag}
@@ -401,7 +401,7 @@ function App() {
                       {cartItems.map((item, index) => (
                         <div
                           key={`${item.id}-${index}`}
-                          className="flex flex-col gap-4 rounded-[1.5rem] bg-slate-50 px-5 py-4 sm:flex-row sm:items-center sm:justify-between"
+                          className="flex flex-col gap-4 rounded-[1.5rem] bg-slate-50 px-5 py-4 transition duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-[0_16px_40px_rgba(15,23,42,0.08)] sm:flex-row sm:items-center sm:justify-between"
                         >
                           <div className="flex items-center gap-4">
                             <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white shadow-sm">
@@ -466,12 +466,12 @@ function App() {
             {steps.map((step, index) => (
               <article
                 key={step.title}
-                className="relative flex min-h-[23rem] flex-col items-center rounded-[1.6rem] border border-slate-200 bg-white px-7 py-10 text-center shadow-[0_12px_32px_rgba(15,23,42,0.05)]"
+                className="group relative flex min-h-[23rem] flex-col items-center rounded-[1.6rem] border border-slate-200 bg-white px-7 py-10 text-center shadow-[0_12px_32px_rgba(15,23,42,0.05)] transition duration-300 hover:-translate-y-2 hover:border-violet-200 hover:shadow-[0_24px_65px_rgba(124,58,237,0.12)]"
               >
                 <span className="absolute right-5 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-violet-600 text-base font-bold text-white">
                   {String(index + 1).padStart(2, '0')}
                 </span>
-                <div className="mt-10 flex h-24 w-24 items-center justify-center rounded-full bg-violet-100">
+                <div className="mt-10 flex h-24 w-24 items-center justify-center rounded-full bg-violet-100 transition duration-300 group-hover:scale-105 group-hover:bg-violet-200/80">
                   <img src={step.icon} alt="" className="h-11 w-11 object-contain" />
                 </div>
                 <h3 className="mt-7 font-outfit text-[2rem] font-bold tracking-[-0.02em] text-slate-900">{step.title}</h3>
@@ -493,7 +493,7 @@ function App() {
             {pricingPlans.map((plan) => (
               <article
                 key={plan.name}
-                className={`relative rounded-[2rem] border p-8 shadow-[0_18px_60px_rgba(15,23,42,0.06)] ${
+                className={`group relative rounded-[2rem] border p-8 shadow-[0_18px_60px_rgba(15,23,42,0.06)] transition duration-300 hover:-translate-y-2 hover:shadow-[0_28px_80px_rgba(124,58,237,0.12)] ${
                   plan.featured
                     ? 'border-violet-200 bg-[linear-gradient(180deg,#7c3aed,#5b21b6)] text-white'
                     : 'border-slate-200 bg-white text-slate-900'
@@ -535,27 +535,34 @@ function App() {
           </div>
         </section>
 
-        <section className="mx-auto max-w-7xl px-5 pb-18 md:px-8 lg:px-10">
-          <div className="overflow-hidden rounded-[2.2rem] bg-[linear-gradient(110deg,#6d28d9,#9333ea_45%,#111827)] px-8 py-14 text-center text-white shadow-[0_26px_90px_rgba(91,33,182,0.35)] md:px-12">
-            <div className="mx-auto max-w-3xl">
-              <p className="text-sm font-semibold uppercase tracking-[0.35em] text-violet-200">Ready to transform your workflow?</p>
-              <h2 className="mt-4 font-outfit text-4xl font-extrabold md:text-5xl">Launch your next project with premium-ready digital tools.</h2>
-              <p className="mt-5 text-base leading-8 text-white/80">
-                Save time, improve quality, and keep your creative momentum moving with expertly prepared digital products.
-              </p>
-              <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
-                <a
-                  href="#products"
-                  className="btn h-12 rounded-full border-none bg-white px-8 text-violet-700 shadow-none hover:bg-violet-50"
-                  onClick={() => setActiveView('products')}
-                >
-                  Shop Now
-                </a>
-                <a href="#support" className="btn h-12 rounded-full border border-white/25 bg-white/10 px-8 text-white shadow-none hover:bg-white/20">
-                  Talk to Support
-                </a>
-              </div>
+        <section className="mt-6 bg-[radial-gradient(circle_at_center,#b61cff_0%,#7c3aed_35%,#5b21b6_70%,#4c1d95_100%)] px-5 py-24 text-white md:px-8 lg:px-10 lg:py-28">
+          <div className="mx-auto max-w-4xl text-center">
+            <h2 className="font-outfit text-4xl font-extrabold tracking-[-0.03em] md:text-5xl lg:text-[4rem]">
+              Ready To Transform Your Workflow?
+            </h2>
+            <p className="mx-auto mt-6 max-w-3xl text-base leading-8 text-white/80 md:text-[1.35rem] md:leading-10">
+              Join thousands of professionals who are already using Digitools to work smarter.
+              <br className="hidden md:block" />
+              Start your free trial today.
+            </p>
+            <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <a
+                href="#products"
+                className="btn h-14 rounded-full border-none bg-white px-9 text-lg font-semibold text-violet-700 shadow-none hover:bg-violet-50"
+                onClick={() => setActiveView('products')}
+              >
+                Explore Products
+              </a>
+              <a
+                href="#pricing"
+                className="btn h-14 rounded-full border border-white/60 bg-transparent px-9 text-lg font-semibold text-white shadow-none hover:bg-white/10"
+              >
+                View Pricing
+              </a>
             </div>
+            <p className="mt-8 text-sm text-white/80 md:text-[1.05rem]">
+              14-day free trial • No credit card required • Cancel anytime
+            </p>
           </div>
         </section>
       </main>
@@ -627,5 +634,10 @@ function App() {
 }
 
 export default App;
+
+
+
+
+
 
 

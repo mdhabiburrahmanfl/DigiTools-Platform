@@ -1,9 +1,9 @@
-import aiWritingIcon from '../../assets/products/writing_2327400 1.png';
+﻿import aiWritingIcon from '../../assets/products/writing_2327400 1.png';
 import designPackIcon from '../../assets/products/design-tool.png';
 import brandAssetIcon from '../../assets/products/portfolio.png';
 import automationIcon from '../../assets/products/operation.png';
 import socialKitIcon from '../../assets/products/social-media.png';
-import ecommerceIcon from '../../assets/products/shopping-cart.png';
+import ecommerceIcon from '../../assets/products/shopping-cart.svg';
 
 export const products = [
   {
@@ -73,3 +73,5 @@ export const products = [
     icon: ecommerceIcon,
   },
 ];
+
+
