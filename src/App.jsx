@@ -27,17 +27,17 @@ const stats = [
 const steps = [
   {
     title: 'Create Account',
-    description: 'Sign up in moments and unlock a clean dashboard for managing your selected digital tools.',
+    description: 'Sign up for free in seconds. No credit card required to get started.',
     icon: userIcon,
   },
   {
     title: 'Choose Products',
-    description: 'Compare features, pricing, and tags so you can pick the resources that fit your workflow best.',
+    description: 'Browse our catalog and select the tools that fit your needs.',
     icon: packageIcon,
   },
   {
     title: 'Start Creating',
-    description: 'Download your tools instantly and begin building faster with ready-to-use premium assets.',
+    description: 'Download and start using your premium tools immediately.',
     icon: rocketIcon,
   },
 ];
@@ -89,7 +89,6 @@ const tagClasses = {
   new: 'bg-emerald-100 text-emerald-700',
   'best seller': 'bg-amber-100 text-amber-700',
 };
-
 const footerSections = [
   {
     title: 'Product',
@@ -121,9 +120,9 @@ const footerSections = [
 ];
 
 const footerSocialLinks = [
-  { label: 'Instagram', href: 'https://instagram.com', icon: FaInstagram, external: true },
-  { label: 'Facebook', href: 'https://facebook.com', icon: FaFacebookF, external: true },
-  { label: 'X', href: 'https://x.com', icon: FaXTwitter, external: true },
+  { label: 'Instagram', href: 'https://instagram.com', icon: FaInstagram },
+  { label: 'Facebook', href: 'https://facebook.com', icon: FaFacebookF },
+  { label: 'X', href: 'https://x.com', icon: FaXTwitter },
 ];
 
 const footerLegalLinks = [
@@ -453,31 +452,34 @@ function App() {
           </div>
         </section>
 
-        <section id="steps" className="mx-auto max-w-7xl px-5 py-10 md:px-8 lg:px-10 lg:py-16">
+        <section id="steps" className="mx-auto max-w-7xl px-5 py-18 md:px-8 lg:px-10 lg:py-24">
           <div className="text-center">
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-violet-600">Simple process</p>
-            <h2 className="mt-4 font-outfit text-4xl font-extrabold text-slate-950 md:text-5xl">Get Started In 3 Steps</h2>
+            <h2 className="font-outfit text-4xl font-extrabold text-slate-950 md:text-5xl lg:text-[4rem]">
+              Get Started In 3 Steps
+            </h2>
+            <p className="mx-auto mt-5 max-w-2xl text-base text-slate-500 md:text-xl">
+              Start using premium digital tools in minutes, not hours.
+            </p>
           </div>
 
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
+          <div className="mt-14 grid gap-8 md:grid-cols-3">
             {steps.map((step, index) => (
               <article
                 key={step.title}
-                className="relative rounded-[2rem] border border-slate-200 bg-white p-8 text-center shadow-[0_18px_60px_rgba(15,23,42,0.06)]"
+                className="relative flex min-h-[23rem] flex-col items-center rounded-[1.6rem] border border-slate-200 bg-white px-7 py-10 text-center shadow-[0_12px_32px_rgba(15,23,42,0.05)]"
               >
-                <span className="absolute -top-3 left-1/2 flex h-8 w-8 -translate-x-1/2 items-center justify-center rounded-full bg-violet-600 text-sm font-bold text-white">
-                  {index + 1}
+                <span className="absolute right-5 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-violet-600 text-base font-bold text-white">
+                  {String(index + 1).padStart(2, '0')}
                 </span>
-                <div className="mx-auto flex h-18 w-18 items-center justify-center rounded-full bg-violet-50">
-                  <img src={step.icon} alt="" className="h-8 w-8 object-contain" />
+                <div className="mt-10 flex h-24 w-24 items-center justify-center rounded-full bg-violet-100">
+                  <img src={step.icon} alt="" className="h-11 w-11 object-contain" />
                 </div>
-                <h3 className="mt-6 font-outfit text-2xl font-bold text-slate-900">{step.title}</h3>
-                <p className="mt-3 text-sm leading-7 text-slate-600">{step.description}</p>
+                <h3 className="mt-7 font-outfit text-[2rem] font-bold tracking-[-0.02em] text-slate-900">{step.title}</h3>
+                <p className="mt-4 max-w-[18rem] text-[1.02rem] leading-8 text-slate-500">{step.description}</p>
               </article>
             ))}
           </div>
         </section>
-
         <section id="pricing" className="mx-auto max-w-7xl px-5 py-18 md:px-8 lg:px-10">
           <div className="text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-violet-600">Flexible plans</p>
@@ -560,7 +562,7 @@ function App() {
 
       <footer id="support" className="bg-[#121a2b] text-white">
         <div className="mx-auto max-w-7xl px-5 py-20 md:px-8 lg:px-10">
-          <div className="grid gap-12 border-b border-white/10 pb-14 lg:grid-cols-[1.9fr_0.9fr_0.9fr_1fr_0.9fr]">
+          <div className="grid gap-12 border-b border-white/10 pb-14 md:grid-cols-2 lg:grid-cols-[1.8fr_0.9fr_0.9fr_1fr_0.95fr]">
             <div className="max-w-md">
               <a href="#home" className="font-outfit text-5xl font-extrabold leading-none text-white">
                 DigiTools
@@ -595,8 +597,8 @@ function App() {
                     <a
                       key={link.label}
                       href={link.href}
-                      target={link.external ? '_blank' : undefined}
-                      rel={link.external ? 'noreferrer' : undefined}
+                      target="_blank"
+                      rel="noreferrer"
                       aria-label={link.label}
                       className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-[#121a2b] transition hover:-translate-y-0.5 hover:bg-violet-100"
                     >
@@ -609,7 +611,7 @@ function App() {
           </div>
 
           <div className="flex flex-col gap-5 pt-8 text-sm text-slate-400 md:flex-row md:items-center md:justify-between">
-            <p>&copy; {currentYear} Digitools. All rights reserved.</p>
+            <p>&copy; {new Date().getFullYear()} Digitools. All rights reserved.</p>
             <div className="flex flex-wrap items-center gap-6 md:gap-10">
               {footerLegalLinks.map((link) => (
                 <a key={link.label} href={link.href} className="transition hover:text-white">
